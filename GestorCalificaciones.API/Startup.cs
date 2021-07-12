@@ -1,4 +1,5 @@
 using GestorCalificaciones.API.Context;
+using GestorCalificaciones.API.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,7 @@ namespace GestorCalificaciones.API
                 opt => opt.CommandTimeout((int)TimeSpan.FromMinutes(15).TotalSeconds)));
 
             services.AddControllers();
+            services.AddConfigurationEntities();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

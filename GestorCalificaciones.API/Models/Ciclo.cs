@@ -18,7 +18,7 @@ namespace GestorCalificaciones.API.Models
         public double? PromedioBeca { get; set; }
 
 
-        public int IdAlumno { get; set; }
+        public int? IdAlumno { get; set; }
         [ForeignKey("IdAlumno")]
         public Alumno Alumno { get; set; }
     }

@@ -1,4 +1,6 @@
 ﻿using GestorCalificaciones.API.Context;
+using GestorCalificaciones.API.Services;
+using GestorCalificaciones.API.Services.Impl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,18 +21,25 @@ namespace GestorCalificaciones.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        public GestorCalificacionesContext gestorCalificacionesContext;
+        public ICicloService _cicloService;
+        public ICursoService _cursoService;
+        public IEvaluacionService _evaluacionService { get; set; }
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, GestorCalificacionesContext gestorCalificacionesContext)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICicloService cicloService
+            , ICursoService cursoService, IEvaluacionService evaluacionService)
         {
             _logger = logger;
-            this.gestorCalificacionesContext = gestorCalificacionesContext;
+            _cicloService = cicloService;
+            _cursoService = cursoService;
+            _evaluacionService = evaluacionService;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var x = gestorCalificacionesContext.CursoEvaluaciones.ToList();
+            var ciclo = _cicloService.GetAll();
+            //var curso = _cursoService.GetAll();
+            //var evas = _evaluacionService.GetAll();
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
