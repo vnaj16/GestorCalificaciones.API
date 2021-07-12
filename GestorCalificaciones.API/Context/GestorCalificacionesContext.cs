@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GestorCalificaciones.API.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,11 @@ namespace GestorCalificaciones.API.Context
             : base(options)
         {
         }
+
+        public DbSet<Ciclo> Ciclos { get; set; }
+        public DbSet<Curso> Cursos { get; set; }
+        public DbSet<CursoEvaluacion> CursoEvaluaciones { get; set; }
+        public DbSet<Evaluacion> Evaluaciones { get; set; }
+        public DbSet<Alumno> Alumnos { get; set; }
     }
 }

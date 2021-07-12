@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GestorCalificaciones.API.Context;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,21 +12,25 @@ namespace GestorCalificaciones.API.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        public GestorCalificacionesContext gestorCalificacionesContext;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, GestorCalificacionesContext gestorCalificacionesContext)
         {
             _logger = logger;
+            this.gestorCalificacionesContext = gestorCalificacionesContext;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            var x = gestorCalificacionesContext.CursoEvaluaciones.ToList();
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
