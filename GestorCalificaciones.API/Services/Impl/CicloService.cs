@@ -1,4 +1,5 @@
-﻿using GestorCalificaciones.API.Models;
+﻿using GestorCalificaciones.API.DTOs;
+using GestorCalificaciones.API.Models;
 using GestorCalificaciones.API.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace GestorCalificaciones.API.Services.Impl
             _cicloRepository = cicloRepository;
         }
 
-        public Ciclo Create(Ciclo obj)
+        public CicloDTO Create(CicloDTO obj)
         {
             throw new NotImplementedException();
         }
@@ -26,17 +27,31 @@ namespace GestorCalificaciones.API.Services.Impl
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Ciclo> GetAll(int maxRows = 100)
+        public IEnumerable<CicloDTO> GetAll(int maxRows = 100)
         {
-            return _cicloRepository.GetAll();
+            List<CicloDTO> list = new List<CicloDTO>();
+            foreach (var ciclo in _cicloRepository.GetAll(maxRows))
+            {
+                var tempCiclo = new CicloDTO()
+                {
+                    IdCiclo = ciclo.IdCiclo,
+                    //nCursos = ciclo.nCursos,
+                    Periodo = ciclo.Periodo,
+                    //PromedioBeca = ciclo.PromedioBeca,
+                    //PromedioFinal = ciclo.PromedioFinal
+                };
+
+                list.Add(tempCiclo);
+            }
+            return list;
         }
 
-        public Ciclo GetById(int id)
+        public CicloDTO GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Ciclo Update(Ciclo obj)
+        public CicloDTO Update(CicloDTO obj)
         {
             throw new NotImplementedException();
         }

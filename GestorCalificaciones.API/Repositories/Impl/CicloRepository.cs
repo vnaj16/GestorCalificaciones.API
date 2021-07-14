@@ -26,7 +26,11 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public IEnumerable<Ciclo> GetAll(int maxRows = 0)
         {
-            return _context.Ciclos.ToList();
+            if (maxRows==0)
+            {
+                return _context.Ciclos.ToList();
+            }
+            return _context.Ciclos.Take(maxRows).ToList();
         }
 
         public Ciclo GetById(int id)
