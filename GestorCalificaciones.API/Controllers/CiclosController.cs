@@ -21,16 +21,23 @@ namespace GestorCalificaciones.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CicloDTO>> GetCiclo()
+        public ActionResult<IEnumerable<CicloDTO>> GetCiclos()
         {
             return Ok(_cicloService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<IEnumerable<CicloDTO>> GetCiclo(int id)
+        {
+            return Ok(_cicloService.GetById(id));
         }
 
         [HttpGet]
         [Route("{id}/cursos")]
         public ActionResult<IEnumerable<CursoDTO>> GetCursos(int id)
         {
-            return Ok("Aca irian los cursos del ciclo con ID: " + id);
+            return Ok(_cicloService.GetCursosByCicloId(id));
         }
     }
 }

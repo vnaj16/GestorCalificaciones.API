@@ -16,12 +16,21 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public Ciclo Create(Ciclo obj)
         {
-            throw new NotImplementedException();
+            _context.Ciclos.Add(obj);
+            _context.SaveChanges();
+            return obj;
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var cicloDB = _context.Ciclos.Find(id);
+            if (cicloDB is null)
+            {
+                return false;
+            }
+            _context.Ciclos.Remove(cicloDB);
+            _context.SaveChanges();
+            return true;
         }
 
         public IEnumerable<Ciclo> GetAll(int maxRows = 0)
@@ -35,12 +44,30 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public Ciclo GetById(int id)
         {
-            throw new NotImplementedException();
+            var cicloDB = _context.Ciclos.Find(id);
+            if (cicloDB is null)
+            {
+                return null;
+            }
+            return cicloDB;
         }
 
         public Ciclo Update(Ciclo obj)
         {
-            throw new NotImplementedException();
+            var cicloDB = _context.Ciclos.Find(obj.IdCiclo);
+            if (cicloDB is null)
+            {
+                throw new Exception($"Ciclo with id {obj.IdCiclo} doesnt exits");
+            }
+
+            cicloDB.nCursos = obj.nCursos;
+            cicloDB.Periodo = obj.Periodo;
+            cicloDB.PromedioBeca = obj.PromedioBeca;
+            cicloDB.PromedioFinal = obj.PromedioFinal;
+
+            _context.SaveChanges();
+
+            return obj;
         }
     }
 }

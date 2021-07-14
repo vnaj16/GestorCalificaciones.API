@@ -11,20 +11,39 @@ namespace GestorCalificaciones.API.Services.Impl
     public class CicloService : ICicloService
     {
         public ICicloRepository _cicloRepository { get; set; }
+        public ICursoRepository _cursoRepository { get; set; }
 
-        public CicloService(ICicloRepository cicloRepository)
+        public CicloService(ICicloRepository cicloRepository, ICursoRepository cursoRepository)
         {
             _cicloRepository = cicloRepository;
+            _cursoRepository = cursoRepository;
         }
 
-        public CicloDTO Create(CicloDTO obj)
+        public CreateCicloDTO Create(CreateCicloDTO obj)
         {
-            throw new NotImplementedException();
+            Ciclo newCiclo = new Ciclo()
+            {
+                nCursos = obj.nCursos,
+                Periodo = obj.Periodo,
+                PromedioBeca = obj.PromedioBeca,
+                PromedioFinal = obj.PromedioFinal
+            };
+
+            var cicloDB = _cicloRepository.Create(newCiclo);
+
+            obj.IdCiclo = cicloDB.IdCiclo;
+
+            return obj;
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var cicloDB = _cicloRepository.GetById(id);
+            if (cicloDB is null)
+            {
+                return false;
+            }
+            return _cicloRepository.Delete(id);
         }
 
         public IEnumerable<CicloDTO> GetAll(int maxRows = 100)
@@ -35,10 +54,7 @@ namespace GestorCalificaciones.API.Services.Impl
                 var tempCiclo = new CicloDTO()
                 {
                     IdCiclo = ciclo.IdCiclo,
-                    //nCursos = ciclo.nCursos,
                     Periodo = ciclo.Periodo,
-                    //PromedioBeca = ciclo.PromedioBeca,
-                    //PromedioFinal = ciclo.PromedioFinal
                 };
 
                 list.Add(tempCiclo);
@@ -46,14 +62,60 @@ namespace GestorCalificaciones.API.Services.Impl
             return list;
         }
 
-        public CicloDTO GetById(int id)
+        public DetailCicloDTO GetById(int id)
         {
-            throw new NotImplementedException();
+            var cicloDB = _cicloRepository.GetById(id);
+            if (cicloDB is null)
+            {
+                return null;
+            }
+
+            return new DetailCicloDTO()
+            {
+                IdCiclo = id,
+                nCursos = cicloDB.nCursos,
+                Periodo = cicloDB.Periodo,
+                PromedioBeca = cicloDB.PromedioBeca,
+                PromedioFinal = cicloDB.PromedioFinal
+            };
         }
 
-        public CicloDTO Update(CicloDTO obj)
+        public CreateCicloDTO Update(CreateCicloDTO obj)
         {
-            throw new NotImplementedException();
+            Ciclo newCiclo = new Ciclo()
+            {
+                nCursos = obj.nCursos,
+                Periodo = obj.Periodo,
+                PromedioBeca = obj.PromedioBeca,
+                PromedioFinal = obj.PromedioFinal
+            };
+
+            var cicloDB = _cicloRepository.Update(newCiclo);
+
+            obj.nCursos = cicloDB.nCursos;
+            obj.Periodo = cicloDB.Periodo;
+            obj.PromedioBeca = cicloDB.PromedioBeca;
+            obj.PromedioFinal = cicloDB.PromedioFinal;
+
+            return obj;
+        }
+
+        public IEnumerable<CursoDTO> GetCursosByCicloId(int idCiclo)
+        {
+            List<CursoDTO> list = new List<CursoDTO>();
+            foreach (var curso in _cursoRepository.GetCursosByCiclo(idCiclo))
+            {
+                CursoDTO temp = new CursoDTO()
+                {
+                    IdCurso = curso.IdCurso,
+                    Codigo = curso.Codigo,
+                    Nombre = curso.Nombre
+                };
+
+                list.Add(temp);
+            }
+
+            return list;
         }
     }
 }

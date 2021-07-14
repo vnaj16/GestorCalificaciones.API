@@ -37,6 +37,11 @@ namespace GestorCalificaciones.API.Repositories.Impl
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Curso> GetCursosByCiclo(int id)
+        {
+            return _context.Cursos.Where(x => x.IdCiclo == id).ToList();
+        }
+
         public Curso Update(Curso obj)
         {
             throw new NotImplementedException();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestorCalificaciones.API.Services
 {
-    public interface IEvaluacionService : IService<Evaluacion>
+    public interface IEvaluacionService : IService<Evaluacion, Evaluacion, Evaluacion>
     {
     }
 }
