@@ -23,21 +23,70 @@ namespace GestorCalificaciones.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CicloDTO>> GetCiclos()
         {
-            return Ok(_cicloService.GetAll());
+            try
+            {
+                return Ok(_cicloService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<IEnumerable<CicloDTO>> GetCiclo(int id)
+        public ActionResult<DetailCicloDTO> GetCiclo(int id)
         {
-            return Ok(_cicloService.GetById(id));
+            try
+            {
+                return Ok(_cicloService.GetById(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<CreateCicloDTO> CreateCiclo(CreateCicloDTO createCicloDTO)
+        {
+            try
+            {
+                return Ok(_cicloService.Create(createCicloDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult<CreateCicloDTO> UpdateCiclo(int id, CreateCicloDTO ciclo)
+        {
+            try
+            {
+                return Ok(_cicloService.Update(ciclo));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("{id}/cursos")]
         public ActionResult<IEnumerable<CursoDTO>> GetCursos(int id)
         {
-            return Ok(_cicloService.GetCursosByCicloId(id));
+            try
+            {
+                return Ok(_cicloService.GetCursosByCicloId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
