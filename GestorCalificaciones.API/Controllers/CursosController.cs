@@ -21,9 +21,71 @@ namespace GestorCalificaciones.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CursoDTO>> GetCurso()
+        public ActionResult<IEnumerable<CursoDTO>> GetCursos()
         {
-            return Ok(_cursoService.GetAll());
+            try
+            {
+                return Ok(_cursoService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<DetailCursoDTO> GetCurso(int id)
+        {
+            try
+            {
+                return Ok(_cursoService.GetById(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<CreateCursoDTO> CreateCurso(CreateCursoDTO createCursoDTO)
+        {
+            try
+            {
+                return Ok(_cursoService.Create(createCursoDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult<CreateCursoDTO> Updatecurso(int id, CreateCursoDTO curso)
+        {
+            try
+            {
+                return Ok(_cursoService.Update(curso));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}/evaluaciones")]
+        public ActionResult<IEnumerable<EvaluacionDTO>> GetEvaluaciones(int id)
+        {
+            try
+            {
+                return Ok(_cursoService.GetEvaluacionesByCursoId(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

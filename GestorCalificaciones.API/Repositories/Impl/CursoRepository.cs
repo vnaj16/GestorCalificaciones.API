@@ -15,12 +15,21 @@ namespace GestorCalificaciones.API.Repositories.Impl
         }
         public Curso Create(Curso obj)
         {
-            throw new NotImplementedException();
+            _context.Cursos.Add(obj);
+            _context.SaveChanges();
+            return obj;
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var cursoDB = _context.Cursos.Find(id);
+            if (cursoDB is null)
+            {
+                return false;
+            }
+            _context.Cursos.Remove(cursoDB);
+            _context.SaveChanges();
+            return true;
         }
 
         public IEnumerable<Curso> GetAll(int maxRows = 0)
@@ -34,7 +43,12 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public Curso GetById(int id)
         {
-            throw new NotImplementedException();
+            var cursoDB = _context.Cursos.Find(id);
+            if (cursoDB is null)
+            {
+                return null;
+            }
+            return cursoDB;
         }
 
         public IEnumerable<Curso> GetCursosByCiclo(int id)
@@ -44,7 +58,23 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public Curso Update(Curso obj)
         {
-            throw new NotImplementedException();
+            var cursoDB = _context.Cursos.Find(obj.IdCurso);
+            if (cursoDB is null)
+            {
+                throw new Exception($"Curso with id {obj.IdCiclo} doesnt exits");
+            }
+
+            cursoDB.Codigo = obj.Codigo;
+            cursoDB.Creditos = obj.Creditos;
+            cursoDB.nCampos = obj.nCampos;
+            cursoDB.Nombre = obj.Nombre;
+            cursoDB.PromedioFinal = obj.PromedioFinal;
+            cursoDB.PromedioTemporal = obj.PromedioTemporal;
+            cursoDB.Vez = obj.Vez;
+
+            _context.SaveChanges();
+
+            return obj;
         }
     }
 }

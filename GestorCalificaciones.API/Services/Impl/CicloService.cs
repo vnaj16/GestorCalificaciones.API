@@ -84,6 +84,7 @@ namespace GestorCalificaciones.API.Services.Impl
         {
             Ciclo newCiclo = new Ciclo()
             {
+                IdCiclo = obj.IdCiclo,
                 nCursos = obj.nCursos,
                 Periodo = obj.Periodo,
                 PromedioBeca = obj.PromedioBeca,

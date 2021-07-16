@@ -16,16 +16,6 @@ namespace GestorCalificaciones.API.Services.Impl
         {
             _cursoRepository = cursoRepository;
         }
-        public CursoDTO Create(CursoDTO obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<CursoDTO> GetAll(int maxRows = 100)
         {
             List<CursoDTO> list = new List<CursoDTO>();
@@ -36,11 +26,6 @@ namespace GestorCalificaciones.API.Services.Impl
                     IdCurso = curso.IdCurso,
                     Codigo = curso.Codigo,
                     Nombre = curso.Nombre,
-                    //Creditos = curso.Creditos,
-                    //nCampos = curso.nCampos,
-                    //PromedioFinal = curso.PromedioFinal,
-                    //PromedioTemporal = curso.PromedioTemporal,
-                    //Vez = curso.Vez
                 };
 
                 list.Add(tempCurso);
@@ -48,14 +33,96 @@ namespace GestorCalificaciones.API.Services.Impl
             return list;
         }
 
-        public CursoDTO GetById(int id)
+        public DetailCursoDTO GetById(int id)
         {
-            throw new NotImplementedException();
+            var cursoDB = _cursoRepository.GetById(id);
+            if (cursoDB is null)
+            {
+                return null;
+            }
+
+            return new DetailCursoDTO()
+            {
+                IdCurso = id,
+                Codigo = cursoDB.Codigo,
+                Creditos = cursoDB.Creditos,
+                nCampos = cursoDB.nCampos,
+                Nombre = cursoDB.Nombre,
+                PromedioFinal = cursoDB.PromedioFinal,
+                Vez = cursoDB.Vez,
+                PromedioTemporal = cursoDB.PromedioTemporal
+            };
         }
 
-        public CursoDTO Update(CursoDTO obj)
+        public CreateCursoDTO Create(CreateCursoDTO obj)
         {
-            throw new NotImplementedException();
+            Curso newCurso = new Curso()
+            {
+                Codigo = obj.Codigo,
+                Creditos = obj.Creditos,
+                nCampos = obj.nCampos,
+                Nombre = obj.Nombre,
+                PromedioFinal = obj.PromedioFinal,
+                Vez = obj.Vez,
+                PromedioTemporal = obj.PromedioTemporal
+            };
+
+            var cursoDB = _cursoRepository.Create(newCurso);
+
+            obj.IdCurso = cursoDB.IdCurso;
+
+            return obj;
+        }
+
+        public CreateCursoDTO Update(CreateCursoDTO obj)
+        {
+            Curso newCurso = new Curso()
+            {
+                IdCurso = obj.IdCurso,
+                Codigo = obj.Codigo,
+                Creditos = obj.Creditos,
+                nCampos = obj.nCampos,
+                Nombre = obj.Nombre,
+                PromedioFinal = obj.PromedioFinal,
+                Vez = obj.Vez,
+                PromedioTemporal = obj.PromedioTemporal
+            };
+
+            var cursoDB = _cursoRepository.Update(newCurso);
+
+            obj.Codigo = cursoDB.Codigo;
+            obj.Creditos = cursoDB.Creditos;
+            obj.nCampos = cursoDB.nCampos;
+            obj.Nombre = cursoDB.Nombre;
+            obj.PromedioFinal = cursoDB.PromedioFinal;
+            obj.Vez = cursoDB.Vez;
+            obj.PromedioTemporal = cursoDB.PromedioTemporal;
+
+            return obj;
+        }
+
+        public bool Delete(int id)
+        {
+            var cursoDB = _cursoRepository.GetById(id);
+            if (cursoDB is null)
+            {
+                return false;
+            }
+            return _cursoRepository.Delete(id);
+        }
+
+        public IEnumerable<EvaluacionDTO> GetEvaluacionesByCursoId(int idCurso)
+        {
+            return new List<EvaluacionDTO>()
+            {
+                new EvaluacionDTO()
+                {
+                    Descripcion = "Practica Calificada",
+                    IdEvaluacion = 32,
+                    Numero = 1,
+                    Tipo = "PC"
+                }
+            };
         }
     }
 }

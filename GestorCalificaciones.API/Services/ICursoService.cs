@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace GestorCalificaciones.API.Services
 {
-    public interface ICursoService : IService<CursoDTO, CursoDTO, CursoDTO>
+    public interface ICursoService : IService<CursoDTO, CreateCursoDTO, DetailCursoDTO>
     {
+        public IEnumerable<EvaluacionDTO> GetEvaluacionesByCursoId(int idCurso);
     }
 }

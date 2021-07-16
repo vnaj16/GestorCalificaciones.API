@@ -31,7 +31,6 @@ namespace GestorCalificaciones.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         [HttpGet]
