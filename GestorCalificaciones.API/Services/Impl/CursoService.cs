@@ -12,11 +12,15 @@ namespace GestorCalificaciones.API.Services.Impl
     {
         public ICursoRepository _cursoRepository { get; set; }
         public IEvaluacionRepository _evaluacionRepository { get; set; }
+        public ICursoEvaluacionRepository _cursoEvaluacionRepository { get; set; }
+        public ICicloService _cicloService { get; set; }
 
-        public CursoService(ICursoRepository cursoRepository, IEvaluacionRepository evaluacionRepository)
+        public CursoService(ICursoRepository cursoRepository, IEvaluacionRepository evaluacionRepository, ICursoEvaluacionRepository cursoEvaluacionRepository, ICicloService cicloService)
         {
             _cursoRepository = cursoRepository;
             _evaluacionRepository = evaluacionRepository;
+            _cursoEvaluacionRepository = cursoEvaluacionRepository;
+            _cicloService = cicloService;
         }
         public IEnumerable<CursoDTO> GetAll(int maxRows = 100)
         {
@@ -133,6 +137,27 @@ namespace GestorCalificaciones.API.Services.Impl
             }
 
             return list;
+        }
+
+        public void UpdateAverage(int idCurso)
+        {
+            Curso curso = _cursoRepository.GetById(idCurso);
+            List<CursoEvaluacion> cursoEvaluaciones = _cursoEvaluacionRepository.GetEvaluacionesByCurso(idCurso).ToList();
+
+            double newPromedio = 0;
+
+            foreach (var evaluacion in cursoEvaluaciones)
+            {
+                newPromedio += (evaluacion.Peso.Value * evaluacion.Nota.Value)/100;
+            }
+
+            curso.PromedioTemporal = newPromedio;
+            curso.PromedioFinal = (int)Math.Round(curso.PromedioTemporal.Value, MidpointRounding.AwayFromZero);
+
+            _cursoRepository.Update(curso);
+
+            //TODO: Actualiza promedio del ciclo
+            _cicloService.UpdateAverage(curso.IdCiclo);
         }
     }
 }

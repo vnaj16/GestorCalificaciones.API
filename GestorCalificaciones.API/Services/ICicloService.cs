@@ -9,5 +9,6 @@ namespace GestorCalificaciones.API.Services
     public interface ICicloService : IService<CicloDTO, CreateCicloDTO, DetailCicloDTO>
     {
         public IEnumerable<CursoDTO> GetCursosByCicloId(int idCiclo);
+        public void UpdateAverage(int idCiclo);
     }
 }

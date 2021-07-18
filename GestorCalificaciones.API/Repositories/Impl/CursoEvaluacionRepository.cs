@@ -47,7 +47,18 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public CursoEvaluacion Update(CursoEvaluacion obj)
         {
-            throw new NotImplementedException();
+            var cursoEvaluacionDB = _context.CursoEvaluaciones.Find(obj.IdCursoEvaluacion);
+            if (cursoEvaluacionDB is null)
+            {
+                throw new Exception($"Evaluacion with id {obj.IdCursoEvaluacion} doesnt exits");
+            }
+
+            cursoEvaluacionDB.Nota = obj.Nota;
+            cursoEvaluacionDB.Rellenado = obj.Rellenado;
+
+            _context.SaveChanges();
+
+            return obj;
         }
     }
 }

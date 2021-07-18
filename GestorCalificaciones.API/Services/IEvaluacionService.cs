@@ -11,5 +11,6 @@ namespace GestorCalificaciones.API.Services
     {
         public IEnumerable<CursoEvaluacionDTO> GetEvaluacionesInfoByCurso(int idCurso);
         public CreateCursoEvaluacionDTO CreateCursoEvaluacion(CreateCursoEvaluacionDTO createCursoEvaluacion);
+        public CreateCursoEvaluacionDTO UpdateGrade(CreateCursoEvaluacionDTO obj);
     }
 }

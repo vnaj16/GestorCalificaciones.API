@@ -13,10 +13,14 @@ namespace GestorCalificaciones.API.Services.Impl
         public IEvaluacionRepository _evaluacionRepository { get; set; }
         public ICursoEvaluacionRepository _cursoEvaluacionRepository { get; set; }
 
-        public EvaluacionService(IEvaluacionRepository evaluacionRepository, ICursoEvaluacionRepository cursoEvaluacionRepository)
+        public ICursoService _cursoService { get; set; }
+
+
+        public EvaluacionService(IEvaluacionRepository evaluacionRepository, ICursoEvaluacionRepository cursoEvaluacionRepository, ICursoService cursoService)
         {
             _evaluacionRepository = evaluacionRepository;
             _cursoEvaluacionRepository = cursoEvaluacionRepository;
+            _cursoService = cursoService;
         }
 
         public EvaluacionDTO Create(EvaluacionDTO obj)
@@ -101,6 +105,27 @@ namespace GestorCalificaciones.API.Services.Impl
             createCursoEvaluacion.IdCursoEvaluacion = objDB.IdCursoEvaluacion;
 
             return createCursoEvaluacion;
+        }
+
+        public CreateCursoEvaluacionDTO UpdateGrade(CreateCursoEvaluacionDTO obj)
+        {
+            CursoEvaluacion cursoEvaluacion = new CursoEvaluacion()
+            {
+                IdCurso = obj.IdCurso,
+                IdCursoEvaluacion = obj.IdCursoEvaluacion,
+                IdEvaluacion = obj.IdEvaluacion,
+                Nota = obj.Nota,
+                Peso = obj.Peso,
+                Rellenado = true
+            };
+
+            _cursoEvaluacionRepository.Update(cursoEvaluacion);
+            obj.Rellenado = true;
+
+            //TODO: Actualizar promedio del curso
+            _cursoService.UpdateAverage(obj.IdCurso);
+
+            return obj;
         }
     }
 }

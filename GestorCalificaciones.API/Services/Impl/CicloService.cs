@@ -118,5 +118,24 @@ namespace GestorCalificaciones.API.Services.Impl
 
             return list;
         }
+
+        public void UpdateAverage(int idCiclo)
+        {
+            Ciclo ciclo = _cicloRepository.GetById(idCiclo);
+            List<Curso> cursos = _cursoRepository.GetCursosByCiclo(idCiclo).ToList();
+
+            double numerador = 0;
+            double denominador = 0;
+
+            foreach (var curso in cursos)
+            {
+                numerador += curso.Creditos.Value * curso.PromedioFinal.Value;
+                denominador += curso.Creditos.Value;
+            }
+
+            ciclo.PromedioFinal = numerador / denominador;
+
+            _cicloRepository.Update(ciclo);
+        }
     }
 }

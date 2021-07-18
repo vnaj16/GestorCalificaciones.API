@@ -62,6 +62,22 @@ namespace GestorCalificaciones.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut]
+        [Route("cursos/{id}/evaluacion/{idEvaluacion}")]
+        public ActionResult<CreateCursoEvaluacionDTO> UpdateCursoEvaluacion(int id, int idEvaluacion, CreateCursoEvaluacionDTO createCursoEvaluacionDTO)
+        {
+            try
+            {
+                createCursoEvaluacionDTO.IdCurso = id;
+                createCursoEvaluacionDTO.IdCursoEvaluacion = idEvaluacion;
+                return Ok(_evaluacionesService.UpdateGrade(createCursoEvaluacionDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         #endregion
     }
 }
