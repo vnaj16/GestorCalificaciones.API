@@ -8,5 +8,6 @@ namespace GestorCalificaciones.API.Repositories
 {
     public interface ICursoEvaluacionRepository : IRepository<CursoEvaluacion>
     {
+        public IEnumerable<CursoEvaluacion> GetEvaluacionesByCurso(int idCurso);
     }
 }

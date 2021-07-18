@@ -25,8 +25,8 @@ namespace GestorCalificaciones.API.Services.Impl
             {
                 nCursos = obj.nCursos,
                 Periodo = obj.Periodo,
-                PromedioBeca = obj.PromedioBeca,
-                PromedioFinal = obj.PromedioFinal
+                PromedioBeca = null,
+                PromedioFinal = 0
             };
 
             var cicloDB = _cicloRepository.Create(newCiclo);

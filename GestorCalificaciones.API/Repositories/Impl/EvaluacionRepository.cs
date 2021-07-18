@@ -1,5 +1,6 @@
 ﻿using GestorCalificaciones.API.Context;
 using GestorCalificaciones.API.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,11 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public IEnumerable<Evaluacion> GetAll(int maxRows = 0)
         {
-            throw new NotImplementedException();
+            if (maxRows == 0)
+            {
+                return _context.Evaluaciones.ToList();
+            }
+            return _context.Evaluaciones.Take(maxRows).ToList();
         }
 
         public Evaluacion GetById(int id)
@@ -36,7 +41,11 @@ namespace GestorCalificaciones.API.Repositories.Impl
         public IEnumerable<Evaluacion> GetEvaluacionesByCurso(int idCurso)
         {
             //TODO: In process...
-            return null;//_context.Evaluaciones.Where(x => x. == id).ToList();
+            var listCursoEvaluaciones = _context.CursoEvaluaciones
+                .Where(x => x.IdCurso == idCurso)
+                .Include(x=> x.Evaluacion)
+                .ToList();
+            return listCursoEvaluaciones.Select(x=>x.Evaluacion);//_context.Evaluaciones.Where(x => x. == id).ToList();
         }
 
         public Evaluacion Update(Evaluacion obj)

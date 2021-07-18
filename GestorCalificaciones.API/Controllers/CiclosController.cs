@@ -66,6 +66,7 @@ namespace GestorCalificaciones.API.Controllers
         {
             try
             {
+                ciclo.IdCiclo = id;
                 return Ok(_cicloService.Update(ciclo));
             }
             catch (Exception ex)

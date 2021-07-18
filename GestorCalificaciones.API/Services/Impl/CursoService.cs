@@ -11,10 +11,12 @@ namespace GestorCalificaciones.API.Services.Impl
     public class CursoService : ICursoService
     {
         public ICursoRepository _cursoRepository { get; set; }
+        public IEvaluacionRepository _evaluacionRepository { get; set; }
 
-        public CursoService(ICursoRepository cursoRepository)
+        public CursoService(ICursoRepository cursoRepository, IEvaluacionRepository evaluacionRepository)
         {
             _cursoRepository = cursoRepository;
+            _evaluacionRepository = evaluacionRepository;
         }
         public IEnumerable<CursoDTO> GetAll(int maxRows = 100)
         {
@@ -113,16 +115,22 @@ namespace GestorCalificaciones.API.Services.Impl
 
         public IEnumerable<EvaluacionDTO> GetEvaluacionesByCursoId(int idCurso)
         {
-            return new List<EvaluacionDTO>()
+            List<EvaluacionDTO> list = new List<EvaluacionDTO>();
+
+            foreach (var item in _evaluacionRepository.GetEvaluacionesByCurso(idCurso))
             {
-                new EvaluacionDTO()
+                EvaluacionDTO temp = new EvaluacionDTO()
                 {
-                    Descripcion = "Practica Calificada",
-                    IdEvaluacion = 32,
-                    Numero = 1,
-                    Tipo = "PC"
-                }
-            };
+                    Descripcion = item.Descripcion,
+                    IdEvaluacion = item.IdEvaluacion,
+                    Numero = item.Numero,
+                    Tipo = item.Tipo
+                };
+
+                list.Add(temp);
+            }
+
+            return list;
         }
     }
 }
