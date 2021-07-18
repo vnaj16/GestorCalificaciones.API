@@ -46,6 +46,7 @@ namespace GestorCalificaciones.API.Services.Impl
             return new DetailCursoDTO()
             {
                 IdCurso = id,
+                IdCiclo = cursoDB.IdCiclo,
                 Codigo = cursoDB.Codigo,
                 Creditos = cursoDB.Creditos,
                 nCampos = cursoDB.nCampos,
@@ -60,13 +61,14 @@ namespace GestorCalificaciones.API.Services.Impl
         {
             Curso newCurso = new Curso()
             {
+                IdCiclo = obj.IdCiclo,
                 Codigo = obj.Codigo,
                 Creditos = obj.Creditos,
                 nCampos = obj.nCampos,
                 Nombre = obj.Nombre,
-                PromedioFinal = obj.PromedioFinal,
+                PromedioFinal = 0,
                 Vez = obj.Vez,
-                PromedioTemporal = obj.PromedioTemporal
+                PromedioTemporal = 0
             };
 
             var cursoDB = _cursoRepository.Create(newCurso);

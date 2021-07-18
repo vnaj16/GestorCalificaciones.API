@@ -17,7 +17,9 @@ namespace GestorCalificaciones.API.Repositories.Impl
 
         public CursoEvaluacion Create(CursoEvaluacion obj)
         {
-            throw new NotImplementedException();
+            _context.CursoEvaluaciones.Add(obj);
+            _context.SaveChanges();
+            return obj;
         }
 
         public bool Delete(int id)

@@ -32,6 +32,8 @@ namespace GestorCalificaciones.API.Controllers
             }
         }
 
+        #region CursoEvaluacion
+
         [HttpGet]
         [Route("cursos/{id}")]
         public ActionResult<IEnumerable<CursoEvaluacionDTO>> GetEvaluacionesByCurso(int id)
@@ -45,5 +47,21 @@ namespace GestorCalificaciones.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("cursos/{id}")]
+        public ActionResult<CreateCursoEvaluacionDTO> CreateCursoEvaluacion(int id, CreateCursoEvaluacionDTO createCursoEvaluacionDTO)
+        {
+            try
+            {
+                createCursoEvaluacionDTO.IdCurso = id;
+                return Ok(_evaluacionesService.CreateCursoEvaluacion(createCursoEvaluacionDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        #endregion
     }
 }

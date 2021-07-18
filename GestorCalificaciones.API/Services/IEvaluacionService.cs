@@ -10,5 +10,6 @@ namespace GestorCalificaciones.API.Services
     public interface IEvaluacionService : IService<EvaluacionDTO, EvaluacionDTO, EvaluacionDTO>
     {
         public IEnumerable<CursoEvaluacionDTO> GetEvaluacionesInfoByCurso(int idCurso);
+        public CreateCursoEvaluacionDTO CreateCursoEvaluacion(CreateCursoEvaluacionDTO createCursoEvaluacion);
     }
 }

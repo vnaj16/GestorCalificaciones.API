@@ -84,5 +84,23 @@ namespace GestorCalificaciones.API.Services.Impl
         {
             throw new NotImplementedException();
         }
+
+        public CreateCursoEvaluacionDTO CreateCursoEvaluacion(CreateCursoEvaluacionDTO createCursoEvaluacion)
+        { //TODO: Falta validar que no se exceda el 100% y tal
+            CursoEvaluacion newObj = new CursoEvaluacion()
+            {
+                IdCurso = createCursoEvaluacion.IdCurso,
+                IdEvaluacion = createCursoEvaluacion.IdEvaluacion,
+                Nota = null,
+                Peso = createCursoEvaluacion.Peso,
+                Rellenado = false
+            };
+
+            var objDB = _cursoEvaluacionRepository.Create(newObj);
+
+            createCursoEvaluacion.IdCursoEvaluacion = objDB.IdCursoEvaluacion;
+
+            return createCursoEvaluacion;
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace GestorCalificaciones.API.DTOs
     public class DetailCursoDTO
     {
         public int IdCurso { get; set; }
+        public int IdCiclo { get; set; }
         public string Codigo { get; set; }
         public string Nombre { get; set; }
         public int? Creditos { get; set; }
