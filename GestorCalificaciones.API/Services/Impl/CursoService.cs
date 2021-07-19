@@ -149,7 +149,7 @@ namespace GestorCalificaciones.API.Services.Impl
             foreach (var evaluacion in cursoEvaluaciones)
             {
                 newPromedio += (evaluacion.Peso.Value * evaluacion.Nota.Value)/100;
-            }
+            }//PASA UN ERROR ACA AL CALUCLAR, EN EL ULTIMO FOR LANZA EXCPECION DE UN NULLABLE
 
             curso.PromedioTemporal = newPromedio;
             curso.PromedioFinal = (int)Math.Round(curso.PromedioTemporal.Value, MidpointRounding.AwayFromZero);
