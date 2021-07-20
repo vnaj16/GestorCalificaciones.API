@@ -22,7 +22,7 @@ namespace GestorCalificaciones.API.Utils
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            //services.AddScoped<IAlumnoService, AlumnoService>();
+            services.AddScoped<IAlumnoService, AlumnoService>();
             services.AddScoped<ICursoService, CursoService>();
             services.AddScoped<ICicloService, CicloService>();
             services.AddScoped<IEvaluacionService, EvaluacionService>();
@@ -30,7 +30,7 @@ namespace GestorCalificaciones.API.Utils
 
         private static void ConfigureRepositories(IServiceCollection services)
         {
-            //services.AddScoped<IAlumnoRepository, AlumnoRepository>();
+            services.AddScoped<IAlumnoRepository, AlumnoRepository>();
             services.AddScoped<ICursoRepository, CursoRepository>();
             services.AddScoped<ICicloRepository, CicloRepository>();
             services.AddScoped<ICursoEvaluacionRepository, CursoEvaluacionRepository>();
