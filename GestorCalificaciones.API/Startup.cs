@@ -34,7 +34,16 @@ namespace GestorCalificaciones.API
                 option.UseSqlServer(myAppConnectionString,
                 opt => opt.CommandTimeout((int)TimeSpan.FromMinutes(15).TotalSeconds)));
 
-            services.AddCors(options => { options.AddDefaultPolicy(builder => { builder.AllowAnyOrigin(); }); });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             services.AddControllers();
             services.AddConfigurationEntities();
