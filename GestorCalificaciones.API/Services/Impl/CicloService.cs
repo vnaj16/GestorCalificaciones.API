@@ -1,6 +1,7 @@
 ﻿using GestorCalificaciones.API.DTOs;
 using GestorCalificaciones.API.Models;
 using GestorCalificaciones.API.Repositories;
+using GestorCalificaciones.API.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace GestorCalificaciones.API.Services.Impl
     {
         public ICicloRepository _cicloRepository { get; set; }
         public ICursoRepository _cursoRepository { get; set; }
+        public IAlumnoService _alumnoService { get; set; }
 
-        public CicloService(ICicloRepository cicloRepository, ICursoRepository cursoRepository)
+        public CicloService(ICicloRepository cicloRepository, ICursoRepository cursoRepository, IAlumnoService alumnoService)
         {
             _cicloRepository = cicloRepository;
             _cursoRepository = cursoRepository;
+            _alumnoService = alumnoService;
         }
 
         public CreateCicloDTO Create(CreateCicloDTO obj)
@@ -65,6 +68,15 @@ namespace GestorCalificaciones.API.Services.Impl
         public DetailCicloDTO GetById(int id)
         {
             var cicloDB = _cicloRepository.GetById(id);
+            //TODO: Traer la info del ciclo Periodo - 1, update un repo
+            var previousPeriod = UtilsGestorCalificaciones.GetPreviousPeriod(cicloDB.Periodo);
+            var previousCicloDB = _cicloRepository.GetCicloByPeriod(previousPeriod);
+            var promedioAnterior = 0.0;
+            if (!(previousCicloDB is null))
+            {
+                promedioAnterior = previousCicloDB.PromedioFinal.Value;
+            }
+
             if (cicloDB is null)
             {
                 return null;
@@ -76,7 +88,9 @@ namespace GestorCalificaciones.API.Services.Impl
                 nCursos = cicloDB.nCursos,
                 Periodo = cicloDB.Periodo,
                 PromedioBeca = cicloDB.PromedioBeca,
-                PromedioFinal = cicloDB.PromedioFinal
+                PromedioFinal = cicloDB.PromedioFinal,
+                PeriodoAnterior = previousPeriod,
+                PromedioFinalCicloAnterior = promedioAnterior
             };
         }
 
@@ -136,6 +150,8 @@ namespace GestorCalificaciones.API.Services.Impl
             ciclo.PromedioFinal = numerador / denominador;
 
             _cicloRepository.Update(ciclo);
+
+            _alumnoService.UpdateAccumulatedAverage(1);
         }
     }
 }

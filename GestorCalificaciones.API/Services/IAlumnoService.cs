@@ -8,5 +8,6 @@ namespace GestorCalificaciones.API.Services
 {
     public interface IAlumnoService : IService<AlumnoDTO, AlumnoDTO, AlumnoDTO>
     {
+        public void UpdateAccumulatedAverage(int idAlumno);
     }
 }

@@ -47,6 +47,13 @@ namespace GestorCalificaciones.API.Services.Impl
                 return null;
             }
 
+            var evaluaciones = _cursoEvaluacionRepository.GetEvaluacionesByCurso(cursoDB.IdCiclo);
+            var porcentajeCumplido = 0.0;
+            foreach (var eva in evaluaciones.Where(x=>x.Rellenado.Value))
+            {
+                porcentajeCumplido += eva.Peso.Value;
+            }
+
             return new DetailCursoDTO()
             {
                 IdCurso = id,
@@ -57,7 +64,8 @@ namespace GestorCalificaciones.API.Services.Impl
                 Nombre = cursoDB.Nombre,
                 PromedioFinal = cursoDB.PromedioFinal,
                 Vez = cursoDB.Vez,
-                PromedioTemporal = cursoDB.PromedioTemporal
+                PromedioTemporal = cursoDB.PromedioTemporal,
+                PorcentajeCumplido = porcentajeCumplido
             };
         }
 
@@ -149,14 +157,13 @@ namespace GestorCalificaciones.API.Services.Impl
             foreach (var evaluacion in cursoEvaluaciones)
             {
                 newPromedio += (evaluacion.Peso.Value * evaluacion.Nota.Value)/100;
-            }//PASA UN ERROR ACA AL CALUCLAR, EN EL ULTIMO FOR LANZA EXCPECION DE UN NULLABLE
+            }
 
             curso.PromedioTemporal = newPromedio;
             curso.PromedioFinal = (int)Math.Round(curso.PromedioTemporal.Value, MidpointRounding.AwayFromZero);
 
             _cursoRepository.Update(curso);
 
-            //TODO: Actualiza promedio del ciclo
             _cicloService.UpdateAverage(curso.IdCiclo);
         }
     }

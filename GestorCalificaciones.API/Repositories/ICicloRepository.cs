@@ -8,5 +8,6 @@ namespace GestorCalificaciones.API.Repositories
 {
     public interface ICicloRepository : IRepository<Ciclo>
     {
+        public Ciclo GetCicloByPeriod(string period);
     }
 }

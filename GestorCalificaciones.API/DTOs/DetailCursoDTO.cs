@@ -16,5 +16,6 @@ namespace GestorCalificaciones.API.DTOs
         public double? PromedioTemporal { get; set; }
         public double? PromedioFinal { get; set; }
         public int Vez { get; set; }
+        public double? PorcentajeCumplido { get; set; }
     }
 }

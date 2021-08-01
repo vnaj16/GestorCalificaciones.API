@@ -11,10 +11,12 @@ namespace GestorCalificaciones.API.Services.Impl
     public class AlumnoService : IAlumnoService
     {
         public IAlumnoRepository _alumnoRepository { get; set; }
+        public ICicloRepository _cicloRepository { get; set; }
 
-        public AlumnoService(IAlumnoRepository alumnoRepository)
+        public AlumnoService(IAlumnoRepository alumnoRepository, ICicloRepository cicloRepository)
         {
             _alumnoRepository = alumnoRepository;
+            _cicloRepository = cicloRepository;
         }
 
         public AlumnoDTO Create(AlumnoDTO obj)
@@ -57,6 +59,25 @@ namespace GestorCalificaciones.API.Services.Impl
             _alumnoRepository.Update(temp);
 
             return obj;
+        }
+
+        public void UpdateAccumulatedAverage(int idAlumno=1)
+        {
+            var alumnoDB = _alumnoRepository.GetById(idAlumno);
+            var ciclosDB = _cicloRepository.GetAll()
+                .Where(x => x.IdAlumno == idAlumno).ToList();
+
+            double numerador = 0;
+            int contador = 0;
+            foreach (var ciclo in ciclosDB)
+            {
+                numerador += ciclo.PromedioFinal.Value;
+                contador++;
+            }
+
+            alumnoDB.PromedioAcumulado = numerador / contador;
+
+            _alumnoRepository.Update(alumnoDB);
         }
     }
 }

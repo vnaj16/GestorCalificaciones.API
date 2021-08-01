@@ -52,6 +52,16 @@ namespace GestorCalificaciones.API.Repositories.Impl
             return cicloDB;
         }
 
+        public Ciclo GetCicloByPeriod(string period)
+        {
+            var cicloDB = _context.Ciclos.Where(x=>x.Periodo == period).FirstOrDefault();
+            if (cicloDB is null)
+            {
+                return null;
+            }
+            return cicloDB;
+        }
+
         public Ciclo Update(Ciclo obj)
         {
             var cicloDB = _context.Ciclos.Find(obj.IdCiclo);

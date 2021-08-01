@@ -12,5 +12,7 @@ namespace GestorCalificaciones.API.DTOs
         public int? nCursos { get; set; }
         public double? PromedioFinal { get; set; }
         public double? PromedioBeca { get; set; }
+        public double? PromedioFinalCicloAnterior { get; set; }
+        public string PeriodoAnterior { get; set; }
     }
 }
