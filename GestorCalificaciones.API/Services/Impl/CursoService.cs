@@ -54,6 +54,8 @@ namespace GestorCalificaciones.API.Services.Impl
                 porcentajeCumplido += eva.Peso.Value;
             }
 
+            var nCamposRegistrados = 6;
+
             return new DetailCursoDTO()
             {
                 IdCurso = id,
@@ -61,6 +63,7 @@ namespace GestorCalificaciones.API.Services.Impl
                 Codigo = cursoDB.Codigo,
                 Creditos = cursoDB.Creditos,
                 nCampos = cursoDB.nCampos,
+                nCamposRegistrados = nCamposRegistrados,
                 Nombre = cursoDB.Nombre,
                 PromedioFinal = cursoDB.PromedioFinal,
                 Vez = cursoDB.Vez,

@@ -72,6 +72,7 @@ namespace GestorCalificaciones.API.Services.Impl
             var previousPeriod = UtilsGestorCalificaciones.GetPreviousPeriod(cicloDB.Periodo);
             var previousCicloDB = _cicloRepository.GetCicloByPeriod(previousPeriod);
             var promedioAnterior = 0.0;
+            var nCursosRegistrados = _cursoRepository.GetCursosByCiclo(cicloDB.IdCiclo).Count(); //TODO:Traer desde la DB 
             if (!(previousCicloDB is null))
             {
                 promedioAnterior = previousCicloDB.PromedioFinal.Value;
@@ -86,6 +87,7 @@ namespace GestorCalificaciones.API.Services.Impl
             {
                 IdCiclo = id,
                 nCursos = cicloDB.nCursos,
+                nCursosRegistrados = nCursosRegistrados,
                 Periodo = cicloDB.Periodo,
                 PromedioBeca = cicloDB.PromedioBeca,
                 PromedioFinal = cicloDB.PromedioFinal,

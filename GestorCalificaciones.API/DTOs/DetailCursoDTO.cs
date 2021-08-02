@@ -13,6 +13,7 @@ namespace GestorCalificaciones.API.DTOs
         public string Nombre { get; set; }
         public int? Creditos { get; set; }
         public int? nCampos { get; set; }
+        public int nCamposRegistrados { get; set; }
         public double? PromedioTemporal { get; set; }
         public double? PromedioFinal { get; set; }
         public int Vez { get; set; }
