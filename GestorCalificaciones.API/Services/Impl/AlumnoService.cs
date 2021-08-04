@@ -75,7 +75,7 @@ namespace GestorCalificaciones.API.Services.Impl
                 contador++;
             }
 
-            alumnoDB.PromedioAcumulado = numerador / contador;
+            alumnoDB.PromedioAcumulado = contador > 0?(numerador / contador):0.0;
 
             _alumnoRepository.Update(alumnoDB);
         }

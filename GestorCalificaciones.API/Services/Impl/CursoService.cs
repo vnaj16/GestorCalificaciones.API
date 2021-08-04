@@ -159,7 +159,7 @@ namespace GestorCalificaciones.API.Services.Impl
 
             foreach (var evaluacion in cursoEvaluaciones)
             {
-                newPromedio += (evaluacion.Peso.Value * evaluacion.Nota.Value)/100;
+                newPromedio += (evaluacion.Peso.Value * (evaluacion.Nota.HasValue?evaluacion.Nota.Value:0))/100;
             }
 
             curso.PromedioTemporal = newPromedio;

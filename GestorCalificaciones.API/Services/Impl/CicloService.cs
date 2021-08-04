@@ -145,7 +145,7 @@ namespace GestorCalificaciones.API.Services.Impl
 
             foreach (var curso in cursos)
             {
-                numerador += curso.Creditos.Value * curso.PromedioFinal.Value;
+                numerador += curso.Creditos.Value * (curso.PromedioFinal.HasValue?curso.PromedioFinal.Value:0);
                 denominador += curso.Creditos.Value;
             }
 
