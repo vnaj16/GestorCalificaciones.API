@@ -17,6 +17,8 @@ namespace GestorCalificaciones.API.Utils
             ConfigureServices(services);
             ConfigureRepositories(services);
 
+            services.AddScoped<ILoggerGC, LoggerGestorCalificaciones>();
+
             return services;
         }
 

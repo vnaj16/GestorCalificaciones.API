@@ -1,5 +1,6 @@
 ﻿using GestorCalificaciones.API.DTOs;
 using GestorCalificaciones.API.Services;
+using GestorCalificaciones.API.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,11 @@ namespace GestorCalificaciones.API.Controllers
     public class CursosController : ControllerBase
     {
         private readonly ICursoService _cursoService;
-        public CursosController(ICursoService cursoService)
+        private readonly ILoggerGC _loggerGC;
+        public CursosController(ICursoService cursoService, ILoggerGC loggerGC)
         {
             _cursoService = cursoService;
+            _loggerGC = loggerGC;
         }
 
         [HttpGet]
@@ -27,6 +30,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -41,6 +45,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -54,6 +59,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -68,6 +74,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -82,6 +89,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }

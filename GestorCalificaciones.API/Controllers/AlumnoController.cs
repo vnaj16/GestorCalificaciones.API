@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using GestorCalificaciones.API.Utils;
 
 namespace GestorCalificaciones.API.Controllers
 {
@@ -13,9 +15,11 @@ namespace GestorCalificaciones.API.Controllers
     public class AlumnoController : ControllerBase
     {
         private readonly IAlumnoService _alumnoService;
-        public AlumnoController(IAlumnoService alumnoService)
+        private readonly ILoggerGC _loggerGC;
+        public AlumnoController(IAlumnoService alumnoService, ILoggerGC loggerGC)
         {
             _alumnoService = alumnoService;
+            _loggerGC = loggerGC;
         }
 
         [HttpGet]
@@ -28,6 +32,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using GestorCalificaciones.API.DTOs;
 using GestorCalificaciones.API.Services;
+using GestorCalificaciones.API.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace GestorCalificaciones.API.Controllers
     public class EvaluacionesController : ControllerBase
     {
         private readonly IEvaluacionService _evaluacionesService;
+        private readonly ILoggerGC _loggerGC;
 
-        public EvaluacionesController(IEvaluacionService evaluacionesService)
+        public EvaluacionesController(IEvaluacionService evaluacionesService, ILoggerGC loggerGC)
         {
             _evaluacionesService = evaluacionesService;
+            _loggerGC = loggerGC;
         }
 
         [HttpGet]
@@ -28,6 +31,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -44,6 +48,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -59,6 +64,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
@@ -75,6 +81,7 @@ namespace GestorCalificaciones.API.Controllers
             }
             catch (Exception ex)
             {
+                _loggerGC.WriteLog(ex);
                 return BadRequest(ex.Message);
             }
         }
